@@ -40,7 +40,7 @@ func (c *conn) DB() *mgo.Database {
 func getURL() string {
 	port, err := strconv.Atoi(os.Getenv("DATABASE_PORT"))
 	if err != nil {
-		log.Println("error on load db port form env:", err.Error())
+		log.Println("error on load db port from env:", err.Error())
 		port = 27017
 	}
 	return fmt.Sprintf("mongodb://%s:%s@%s:%d/%s",
