@@ -22,6 +22,7 @@ type AuthController interface {
 	SignUp(ctx *fiber.Ctx) error
 	SignIn(ctx *fiber.Ctx) error
 	GetUser(ctx *fiber.Ctx) error
+	GetUsers(ctx *fiber.Ctx) error
 	PutUser(ctx *fiber.Ctx) error
 	DeleteUser(ctx *fiber.Ctx) error
 }
@@ -138,6 +139,18 @@ func (c *authController) GetUser(ctx *fiber.Ctx) error {
 	return ctx.
 		Status(http.StatusOK).
 		JSON(user)
+}
+
+func (c *authController) GetUsers(ctx *fiber.Ctx) error {
+	users, err := c.usersRepo.GetAll()
+	if err != nil {
+		return ctx.
+			Status(http.StatusInternalServerError).
+			JSON(util.NewJError(err))
+	}
+	return ctx.
+		Status(http.StatusOK).
+		JSON(users)
 }
 
 func (c *authController) PutUser(ctx *fiber.Ctx) error {
